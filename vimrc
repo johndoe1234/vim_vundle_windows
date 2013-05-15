@@ -36,7 +36,8 @@ nnoremap <silent> <leader>sv :so $VIM/vimrc<CR>
 au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
 
 if &t_Co >= 256 || has("gui_running")
-   colorscheme molokai
+   "colorscheme molokai
+   colorscheme desert
 endif
 
 if has("syntax")
@@ -222,7 +223,7 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 "set completeopt=menuone,menu,longest,preview
 "let g:clang_complete_auto = 1
 "let g:clang_use_library = 1
-"let g:clang_library_path = 'c:\clang\clang_llvm-3.1\bin\'
+
 
 
 "windows specific ?
@@ -237,6 +238,15 @@ set guioptions-=l
 set guioptions-=r
 set guioptions-=T
 let g:LustyJugglerSuppressRubyWarning = 1
+
+
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
+
+autocmd FileType ruby,eruby imap <S-CR> <CR><CR>end<Esc>-cc
+autocmd FileType cpp imap <S-CR> <CR><CR>}<Esc>-cc
 
 function! FormatCpp()
     "removing white space on the end of the lines
