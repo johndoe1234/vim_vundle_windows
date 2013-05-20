@@ -249,6 +249,8 @@ autocmd FileType ruby,eruby imap <S-CR> <CR><CR>end<Esc>-cc
 autocmd FileType cpp imap <S-CR> <CR><CR>}<Esc>-cc
 
 function! FormatCpp()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
     "removing white space on the end of the lines
     silent! %s/\([(){};]\)\s\+$/\1/
     silent! %s/\(\S\)\s\+$/\1/
@@ -265,18 +267,22 @@ function! FormatCpp()
     "convert something==something -> something == something
     silent! %s/\(\S\)\([=!>+<]\{1\}=\)/\1 \2/
     silent! %s/\([=!>+<]\{1\}=\)\(\S\)/\1 \2/
+    silent! %s/\(\S\)\(<<\)/\1 \2/
+    silent! %s/\(<<\)\(\S\)/\1 \2/
 
     "removing whitspace from ==
     silent! %s/\s\{2,}\([=!>+<]=\)/ \1/
     silent! %s/\([=!>+<]=\)\s\{2,}/\1 /
 
     "converting  smth     = -> smth =
-    silent! %s/\s\{2,\}\([=<>]\)/ \1/
-    silent! %s/\([=<>]\)\s\{2,\}/\1 /
+    silent! %s/\s\{2,\}\([=,<>/]\)/ \1/
+    silent! %s/\([=,<>/]\)\s\{2,\}/\1 /
 
     "formatting
     silent! normal ggVG=
 
     silent! :w
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
 endfunction
 
