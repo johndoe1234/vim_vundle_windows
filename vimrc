@@ -1,6 +1,7 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 
+let os = substitute(system('ver'), '\(Microsoft\).*', '\=submatch(1)', 'g')
 set rtp+=$VIM/bundle/vundle/
 call vundle#rc()
 
